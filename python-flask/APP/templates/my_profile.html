@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(135deg, #ffffff, #e6f7ff);
+        }
+        .nav {
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+        .nav a.active {
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+        .nav a:hover {
+            transform: translateY(-2px);
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            margin: auto;
+            padding: 20px;
+            max-width: 1200px;
+            padding-top: 100px;
+        }
+        .info-section {
+            width: calc(33.333% - 20px);
+            margin: 10px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+        }
+        .info-section h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+        .info-panel {
+            display: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            width: 90%;
+        }
+        .info-section:hover .info-panel {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+        .info-section .fas {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        #logout-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1001;
+        }
+        #logout-btn:hover {
+            background-color: #c82333;
+        }
+        .expense-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            list-style-type: none;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .info-section {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+            .info-panel {
+                width: calc(100% - 40px);
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="appointment_booking" class="">服务预约</a>
+        <a href="health_status" class="">健康状况</a>
+        <a href="my_profile" class="active">我的</a>
+    </div>
+
+    <div class="container">
+        <div class="info-section" id="basic-info">
+            <h2><span class="fas fa-user"></span> 基本信息</h2>
+            <div class="info-panel">
+                <p>床号: {{ my_profile_info.user_id }}</p>
+                <p>姓名: {{my_profile_info.name}}</p>
+                <p>年龄: {{ my_profile_info.age }}岁</p>
+                <p>地址: {{my_profile_info.address}}</p>
+            </div>
+        </div>
+
+        <div class="info-section" id="account-info">
+            <h2><span class="fas fa-id-card"></span> 账户信息</h2>
+            <div class="info-panel">
+                <p>账户余额: {{ my_profile_info.account }}元</p>
+                <p>应缴费用：{{ my_profile_info.accountcost }}元</p>
+            </div>
+        </div>
+
+        <div class="info-section" id="cost-details">
+            <h2><span class="fas fa-file-invoice"></span> 费用明细</h2>
+            <div class="info-panel">
+                <ul>
+                    {% for item in user_cost_info_list %}
+                        <li class="expense-item">
+                            <p>支付金额：{{ item.cost }}元</p>
+                            <p>支付方式：{{ item.howcost }}</p>
+                            <p>费用类型：{{ item.item }}</p>
+                            <p>支付时间：{{ item.date }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <button id="logout-btn" onclick="goToIndex()">注销</button>
+
+    <script>
+        function goToIndex() {
+            window.location.href = '/'; // 请根据实际路径修改
+        }
+    </script>
+</body>
+</html>

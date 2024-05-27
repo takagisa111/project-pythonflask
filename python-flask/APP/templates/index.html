@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>老年通欢迎您！</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-image: url('../static/index_src.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align to the left of the container */
+            width: 75%;
+            max-width: 300px;
+            margin: 0 10% 0 0;
+        }
+        .button {
+            height: 50px;
+            width: 200px;
+            margin: 10px 0;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+
+        }
+        .button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="button" onclick="location.href='/login';">我是老人</button>
+        <button class="button" onclick="location.href='/login';">我是子女</button>
+    </div>
+</body>
+</html>

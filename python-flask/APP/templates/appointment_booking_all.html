@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全部订单</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+    body, html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: #f9f9f9;
+}
+
+.header {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 2em;
+}
+
+.orders-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* 保证即便只有一个card也会居中 */
+    padding: 20px;
+    max-width: 100%;
+}
+
+.order-card {
+    background: #ffffff; /* 更清晰的背景色 */
+    color: #007bff;
+    width: calc(50% - 40px); /* 为了保证间隙，增加间距 */
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px; /* 更现代的圆角 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 更柔和的阴影 */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.order-card:hover {
+    transform: translateY(-5px); /* 添加悬浮时的轻微上移效果 */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* 悬浮时阴影更明显 */
+}
+
+.order-card .order-info {
+    margin-bottom: 15px; /* 增加间距让文字不那么拥挤 */
+}
+
+.order-card h3 {
+    margin: 0 0 5px 0; /* 添加底部间距 */
+    font-size: 1.2em;
+    color: #333; /* 标题使用更深的色彩 */
+}
+
+.order-card p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666; /* 文字使用更柔和的色彩提高可读性 */
+}
+
+@media (max-width: 1024px) {
+    .order-card {
+        width: calc(75% - 40px); /* 在中等屏幕上卡片宽度为75% */
+    }
+}
+
+@media (max-width: 768px) {
+    .order-card {
+        width: calc(100% - 40px); /* 在小屏幕上卡片宽度为100% */
+    }
+}
+</style>
+</head>
+<body>
+    <div class="header">我的订单</div>
+    <div class="orders-container">
+        {% for item in user_order_info_list %}
+            <div class="order-card">
+                <div class="order-info">
+                    <h3>订单状态：</h3> <!-- 添加了冒号 -->
+                    <p>{{ item.status }}</p>
+                </div>
+                <div class="order-info">
+                    <h3>姓名：</h3> <!-- 添加了冒号 -->
+                    <p>{{ item.name }}</p>
+                </div>
+                <div class="order-info">
+                    <h3>地址：</h3> <!-- 添加了冒号 -->
+                    <p>{{ item.address }}</p>
+                </div>
+                <div class="order-info">
+                    <h3>费用：</h3> <!-- 添加了冒号 -->
+                    <p>{{ item.cost }}</p>
+                </div>
+                <div class="order-info">
+                    <h3>服务类别：</h3> <!-- 添加了冒号 -->
+                    <p>{{ item.servicetype }}</p>
+                </div>
+                <div class="order-info">
+                    <h3>联系电话：</h3> <!-- 添加了冒号 -->
+                    <p>{{ item.childphone }}</p>
+                </div>
+                <div class="order-info">
+                    <h3>支付方式：</h3> <!-- 添加了冒号 -->
+                    <p>{{ item.paymentMethod }}</p>
+                </div>
+                <div class="order-info">
+                    <h3>日期：</h3> <!-- 添加了冒号 -->
+                    <p>{{ item.date }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

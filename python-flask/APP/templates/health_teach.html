@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康宣教</title>
+    <style>
+        body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 更现代的字体 */
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff; /* 更清新的背景颜色 */
+    color: #333;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    height: 100vh; /* 使用视口高度 */
+}
+
+.lecture {
+    background-color: #f4f9ff; /* 更柔和的背景颜色 */
+    color: #065bb5; /* 更深的蓝色调 */
+    border-left: 4px solid #065bb5;
+    flex-grow: 1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 20px;
+    width: 90%;
+    max-width: 600px;
+}
+
+.lecture h2 {
+    margin-top: 0;
+    font-size: 24px; /* 更大的标题字体 */
+}
+
+.lecture img:hover {
+    transform: scale(1.1); /* 更明显的悬浮效果 */
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card {
+    background: white; /* 更简洁的背景 */
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: calc(33.33% - 20px);
+    padding: 20px;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    position: relative;
+    border: 1px solid #d3d3d3; /* 细边框 */
+}
+
+.card:hover {
+    transform: translateY(-10px); /* 更明显的悬浮效果 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.signup-button {
+    background-color: #007bff; /* 标准蓝色 */
+    color: #fff;
+    border: none;
+    padding: 12px 24px; /* 更大的按钮 */
+    border-radius: 6px; /* 更圆的按钮角度 */
+    cursor: pointer;
+    font-size: 16px; /* 更大的文字 */
+    transition: background-color 0.3s, transform 0.2s; /* 添加变形效果 */
+}
+
+.signup-button:hover {
+    background-color: #0056b3; /* 更深的蓝色 */
+    transform: scale(1.05); /* 按钮放大效果 */
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 100%;
+    }
+}
+ .lecture-slider {
+            display: flex;
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        .lecture-card {
+            flex: 0 0 auto;
+            width: 100%;
+            margin-right: 20px;
+            /* 其他卡片样式 */
+        }
+
+        .slider-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0 10px;
+            z-index: 1;
+        }
+
+        .slider-button.prev {
+            left: 0;
+        }
+
+        .slider-button.next {
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="lecture">
+        <img src="../static/healthteach.jpeg" alt="健康讲座图片">
+        <div>
+            <h2>下期讲座预告</h2>
+            <p>主题：老年人如何保持健康的生活习惯</p>
+            <p>时间：2024.5.31</p>
+            <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+        </div>
+    </div>
+    <!-- 添加的推荐标题 -->
+    <div class="recommendation-title">其他讲座推荐:</div>
+    <div class="card">
+    <h3>饮食与免疫力</h3>
+    <p>主题：探讨饮食如何增强免疫力</p>
+        <p>时间：2024.4.30上午9点</p>
+        <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>运动与心脏健康</h3>
+    <p>主题：了解运动对心脏健康的重要性</p>
+    <p>时间：2024.5.2上午9点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>睡眠与大脑功能</h3>
+    <p>主题：研究睡眠如何影响大脑功能</p>
+    <p>时间：2024.5.4下午2点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>心理健康与幸福</h3>
+    <p>主题：掌握提升心理健康的方法</p>
+    <p>时间：2024.5.5上午9点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>预防医学讲座</h3>
+    <p>主题：了解定期体检的重要性</p>
+    <p>时间：2024.5.10下午3点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>营养与能量</h3>
+    <p>主题：发现合理的饮食如何提供持续的能量</p>
+    <p>时间：2024.5.26上午9点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>徒步旅行的健康益处</h3>
+    <p>主题：了解徒步旅行对健康的积极影响</p>
+    <p>时间：2024.5.20下午2点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>深度睡眠的重要性</h3>
+    <p>主题：探讨深度睡眠对身心健康的益处</p>
+    <p>时间：2024.5.9上午9点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>情绪管理与生活品质</h3>
+    <p>主题：学习有效的情绪管理技巧，提升生活品质</p>
+    <p>时间：2024.5.6上午9点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>心血管健康与饮食</h3>
+    <p>主题：了解饮食如何影响心血管健康</p>
+    <p>时间：2024.5.14上午9点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>呼吸与身体健康</h3>
+    <p>主题：了解正确的呼吸方式对身体健康的重要性</p>
+    <p>时间：2024.5.12上午9点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>心理健康与人际关系</h3>
+    <p>主题：探讨心理健康如何影响人际关系</p>
+    <p>时间：2024.5.13上午9点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>体重管理与健康</h3>
+    <p>主题：学习科学的体重管理方法，维护健康</p>
+    <p>时间：2024.5.23下午2点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+<div class="card">
+    <h3>营养与免疫系统</h3>
+    <p>主题：了解营养如何支持免疫系统</p>
+    <p>时间：2024.5.15上午9点</p>
+    <button class="signup-button" onclick="showSignUpMessage()">点我报名</button>
+</div>
+
+</div>
+
+<script>
+    function showSignUpMessage() {
+        alert('您已成功报名讲座！');
+    }
+</script>
+
+</body>
+</html>

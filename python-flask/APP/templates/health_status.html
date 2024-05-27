@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康状况</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(135deg, #ffffff, #e6f7ff);
+        }
+        .nav {
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+        .nav a.active {
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+        .nav a:hover {
+            transform: translateY(-2px);
+        }
+     .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 水平居中子元素 */
+    padding-top: 60px; /* 为顶部导航栏留出空间 */
+    height: calc(100vh - 60px); /* 减去导航栏的高度 */
+        }
+        .welcome-card {
+    margin-bottom: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+        }
+        .info {
+            flex-grow: 1;
+            padding: 10px;
+        }
+        .dynamic-element {
+            padding: 10px;
+        }
+.button-panel {
+    display: flex;
+    flex-direction: row; /* 确保按钮是水平排列的 */
+    width: 100%;
+    justify-content: center; /* 水平居中按钮 */
+    margin-bottom: -50px; /* 调整按钮面板与健康矩阵之间的间距 */
+    gap: 50px; /* 在按钮之间添加间距 */
+}
+.loader {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.catContainer {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.catbody {
+  width: 80px;
+}
+.tail {
+  position: absolute;
+  width: 17px;
+  top: 50%;
+  animation: tail 0.5s ease-in infinite alternate-reverse;
+  transform-origin: top;
+}
+@keyframes tail {
+  0% {
+    transform: rotateZ(60deg);
+  }
+  50% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(-20deg);
+  }
+}
+.wall {
+  width: 300px;
+}
+.text {
+  display: flex;
+  flex-direction: column;
+  width: 50px;
+  position: absolute;
+  margin: 0px 0px 100px 120px;
+}
+.zzz {
+  color: black;
+  font-weight: 700;
+  font-size: 15px;
+  animation: zzz 2s linear infinite;
+}
+.bigzzz {
+  color: black;
+  font-weight: 700;
+  font-size: 25px;
+  margin-left: 10px;
+  animation: zzz 2.3s linear infinite;
+}
+@keyframes zzz {
+  0% {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+  100% {
+    color: transparent;
+  }
+}
+.button {
+ --color: #00A97F;
+ padding: 0.8em 1.7em;
+ background-color: transparent;
+ border-radius: .3em;
+ position: relative;
+ overflow: hidden;
+ cursor: pointer;
+ transition: .5s;
+ font-weight: 400;
+ font-size: 17px;
+ border: 1px solid;
+ font-family: inherit;
+ text-transform: uppercase;
+ color: var(--color);
+ z-index: 1;
+}
+
+.button::before, .button::after {
+ content: '';
+ display: block;
+ width: 50px;
+ height: 50px;
+ transform: translate(-50%, -50%);
+ position: absolute;
+ border-radius: 50%;
+ z-index: -1;
+ background-color: var(--color);
+ transition: 1s ease;
+}
+
+.button::before {
+ top: -1em;
+ left: -1em;
+}
+
+.button::after {
+ left: calc(100% + 1em);
+ top: calc(100% + 1em);
+}
+
+.button:hover::before, .button:hover::after {
+ height: 410px;
+ width: 410px;
+}
+
+.button:hover {
+ color: rgb(10, 25, 30);
+}
+
+.button:active {
+ filter: brightness(.8);
+}
+
+.health-info-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    background-color: transparent;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    overflow: auto;
+    transition: box-shadow 0.3s ease;
+}
+
+.health-info-panel:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.health-info-matrix {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.health-info {
+    width: calc(25% - 40px);
+    height: 200px;
+    background: #ffffff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.health-info:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.status {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffffff;
+    transition: color 0.3s ease;
+}
+
+.health-info:hover .status {
+    color: #ffffff;
+}
+
+.health-info::before {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.health-info:hover::before {
+    opacity: 1;
+}
+
+/* 悬停时的颜色变化 */
+#bmi:hover,
+#bloodGlucose:hover {
+    background: linear-gradient(to bottom right, #18CB18, #90EE90);
+}
+
+#bloodFat:hover,
+#systolicPressure:hover {
+    background: linear-gradient(to bottom right, #CB1818, #FF6961);
+}
+
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="appointment_booking">服务预约</a>
+        <a href="health_status" class="active">健康状况</a>
+        <a href="my_profile">我的</a>
+    </div>
+    <div class="container">
+        <div class="welcome-card">
+            <div class="info">
+            <h1>欢迎回来，{{ health_info.name }}！</h1>
+            <p>年龄: {{ health_info.age }}</p>
+            <p>身高：{{ health_info.height }}cm</p>
+            <p>体重：{{ health_info.weight }}kg</p>
+            <p>疾病史：{{ health_info.DiseasesHistory }}</p>
+        </div>
+            <div class="dynamic-element">
+                              <div class="loader">
+                                   <div class="wrapper">
+    <div class="catContainer">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 733 673"
+        class="catbody"
+      >
+        <path
+          fill="#212121"
+          d="M111.002 139.5C270.502 -24.5001 471.503 2.4997 621.002 139.5C770.501 276.5 768.504 627.5 621.002 649.5C473.5 671.5 246 687.5 111.002 649.5C-23.9964 611.5 -48.4982 303.5 111.002 139.5Z"
+        ></path>
+        <path fill="#212121" d="M184 9L270.603 159H97.3975L184 9Z"></path>
+        <path fill="#212121" d="M541 0L627.603 150H454.397L541 0Z"></path>
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 158 564"
+        class="tail"
+      >
+        <path
+          fill="#191919"
+          d="M5.97602 76.066C-11.1099 41.6747 12.9018 0 51.3036 0V0C71.5336 0 89.8636 12.2558 97.2565 31.0866C173.697 225.792 180.478 345.852 97.0691 536.666C89.7636 553.378 73.0672 564 54.8273 564V564C16.9427 564 -5.4224 521.149 13.0712 488.085C90.2225 350.15 87.9612 241.089 5.97602 76.066Z"
+        ></path>
+      </svg>
+      <div class="text">
+        <span class="bigzzz">Z</span>
+        <span class="zzz">Z</span>
+      </div>
+    </div>
+    <div class="wallContainer">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 500 126"
+        class="wall"
+      >
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="3"
+          x2="450"
+          y1="3"
+          x1="50"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="85"
+          x2="400"
+          y1="85"
+          x1="100"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="122"
+          x2="375"
+          y1="122"
+          x1="125"
+        ></line>
+        <line stroke-width="6" stroke="#7C7C7C" y2="43" x2="500" y1="43"></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="1.99391"
+          x2="115.5"
+          y1="43.0061"
+          x1="115.5"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="2.00002"
+          x2="189"
+          y1="43.0122"
+          x1="189"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="2.00612"
+          x2="262.5"
+          y1="43.0183"
+          x1="262.5"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="2.01222"
+          x2="336"
+          y1="43.0244"
+          x1="336"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="2.01833"
+          x2="409.5"
+          y1="43.0305"
+          x1="409.5"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="43"
+          x2="153"
+          y1="84.0122"
+          x1="153"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="43"
+          x2="228"
+          y1="84.0122"
+          x1="228"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="43"
+          x2="303"
+          y1="84.0122"
+          x1="303"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="43"
+          x2="378"
+          y1="84.0122"
+          x1="378"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="84"
+          x2="192"
+          y1="125.012"
+          x1="192"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="84"
+          x2="267"
+          y1="125.012"
+          x1="267"
+        ></line>
+        <line
+          stroke-width="6"
+          stroke="#7C7C7C"
+          y2="84"
+          x2="342"
+          y1="125.012"
+          x1="342"
+        ></line>
+      </svg>
+    </div>
+         </div>
+                                   </div>
+                 </div>
+             </div>
+        <div class="button-panel">
+            <button class="button" onclick="remindToTakeMedicine()">吃药提醒</button>
+            <button class="button" onclick="showSignUpMessage()">健康评分</button>
+            <button class="button" onclick="location.href='/health_teach';">健康宣教</button>
+        </div>
+        <div class="health-info-panel">
+            <div class="health-info-matrix">
+                <!-- 健康信息矩阵内容 -->
+                <div id="bmi" class="health-info">
+                    <h2>BMI</h2>
+                    <div class="value">{{ health_info.BMI }}|参考范围：18.5~24.9</div>
+                    <div class="status"></div>
+                </div>
+                <div id="bloodGlucose" class="health-info">
+                    <h2>血糖</h2>
+                    <div class="value">{{ health_info.BloodGlucose }}|参考范围：3.9~6.1</div>
+                    <div class="status"></div>
+                </div>
+                <div id="bloodFat" class="health-info">
+                    <h2>血脂</h2>
+                    <div class="value">{{ health_info.BloodFat }}|参考范围：0.0~1.8</div>
+                    <div class="status"></div>
+                </div>
+                <div id="systolicPressure" class="health-info">
+                    <h2>血压</h2>
+                    <div class="value">{{ health_info.systolic_pressure }}/{{ health_info.diastolic_pressure }}|参考范围：[90, 120]</div>
+                    <div class="status"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Define the normal range and warning range for health indicators
+        const healthIndicators = {
+            bmi: { normal: [18.5, 24.9], warning: null },
+            bloodGlucose: { normal: [3.9, 6.1], warning: null },
+            bloodFat: { normal: [0.0, 1.8], warning: null },
+            systolicPressure: { normal: [90, 120], warning: [120, 139] }
+        };
+
+        function determineStatus(current, normal, warning) {
+            if (warning) {
+                if (current < normal[0] || current > normal[1]) {
+                    return 'danger';
+                } else if (current < warning[0] || current > warning[1]) {
+                    return 'warning';
+                }
+            } else {
+                // If there's no warning range
+                if (current < normal[0] || current > normal[1]) {
+                    return 'danger';
+                }
+            }
+            return 'good'; // If the current value is within the normal range
+        }
+
+        function updateHealthStatus() {
+            Object.keys(healthIndicators).forEach(indicator => {
+                const valueElement = document.querySelector(`#${indicator} .value`);
+                const statusElement = document.querySelector(`#${indicator} .status`);
+                const value = parseFloat(valueElement.textContent); // Convert to number directly
+                const { normal, warning } = healthIndicators[indicator];
+                const status = determineStatus(value, normal, warning);
+
+                statusElement.textContent = status; // Only display the status name
+                statusElement.className = `status ${status}`; // Set the status class name
+            });
+        }
+
+        // Automatically update health status when the document is loaded
+        document.addEventListener('DOMContentLoaded', updateHealthStatus);
+
+        function remindToTakeMedicine() {
+            alert("已通知护工提醒老人吃药！");
+        }
+        function showSignUpMessage() {
+        alert('您的健康评分为{{ health_info.score }}');
+    }
+    </script>
+</body>
+</html>
